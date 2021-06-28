@@ -157,7 +157,7 @@ Data should load rather quickly, the whole process took me about an hour. At the
 ```
 SELECT COUNT(1) FROM bike_trips;
 ```
-![alt text](./document/images/ch_citibike1.png "Title")
+![alt text](./images/ch_citibike1.png "Title")
 
 ```
 SELECT user_type, count(*) FROM bike_trips GROUP BY user_type;
