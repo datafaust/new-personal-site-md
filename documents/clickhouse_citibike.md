@@ -162,5 +162,6 @@ SELECT COUNT(1) FROM bike_trips;
 ```
 SELECT user_type, count(*) FROM bike_trips GROUP BY user_type;
 ```
+![alt text](../images/ch_citibike2.png "Title")
 
 And that's it, quick simple and incredibly powerful, lightning fast results perfect for analytics. Enjoy!
