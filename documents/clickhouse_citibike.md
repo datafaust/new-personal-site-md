@@ -17,6 +17,7 @@ cd nyc-citibike-data
 
 This shouldn't take too long, took about an hour for me to download everything and another hour for it to process. Once the data is in postgres you will want to extract .gz files, which are highly compressed and will be loaded into clickhouse. Under Todd's schema you'll see he creates a view with combine trip and geographical information:
 
+```
 CREATE VIEW trips_and_stations AS (
   SELECT
     t.*,
@@ -42,13 +43,18 @@ CREATE VIEW trips_and_stations AS (
     INNER JOIN stations ss ON t.start_station_id = ss.id
     INNER JOIN stations es ON t.end_station_id = es.id
 );
+```
+
 We will want to pull more data than this table however, because we want to include weather data in our main table. You'll want to run a left join against weather observations when pulling from postgres. But first, we will need to create a directory to pull the data and then provide the write permissions to write to that directory:
 
+```
 mkdir -p /mnt/c/Users/yourcompname/nyc-citibike-data/trips
 $ sudo chown -R postgres:postgres \
     /home/yourcompname/nyc-citibike-data/trips
-Now we can use copy to pull the data, I split the files into million chunk files:
+```
 
+Now we can use copy to pull the data, I split the files into million chunk files:
+```
 COPY (
 SELECT
 ts.trip_duration,
@@ -89,15 +95,16 @@ FROM trips_and_stations as ts
         ON weather.date = ts.start_time::date
 ) TO PROGRAM
     'split -l 10000000 --filter="gzip > /mnt/c/Users/yourcompname/Documents/nyc-citibike-data/trips/trips_\$FILE.csv.gz"' WITH CSV;
+```
 This will run in approximatel 15-30 mintues depending on your computer resources.
 
 ### Loading the Data into Clickhouse
 Once you have the files in place, you'll want to start up clickhouse. If you need to review how to set it up you can check out my previous post. Once you're all set, start your server and client:
 
-sudo service clickhouse-server start
-clickhouse client
-Once in the client create your bike_trips table:
+```sudo service clickhouse-server start```
 
+Once in the client create your bike_trips table:
+```
 CREATE TABLE bike_trips (
 trip_duration Nullable(Float64),
 start_time Nullable(DateTime),
@@ -133,8 +140,10 @@ max_temp Nullable(Float64),
 min_temp Nullable(Float64),
 average_wind_speed Nullable(Float64)
 ) ENGINE = Log;
-You may wonder why some fields that could be integers or float64 are changed to string. I decided to do this to get the data in quick, opting to optimize and tune later. In order to clean out some of the NULL data I borrowed Mark's cleaning script he employs with the taxi data in clickhouse. You'll want to log out of clickhouse client and back in terminal run the following:
+```
 
+You may wonder why some fields that could be integers or float64 are changed to string. I decided to do this to get the data in quick, opting to optimize and tune later. In order to clean out some of the NULL data I borrowed Mark's cleaning script he employs with the taxi data in clickhouse. You'll want to log out of clickhouse client and back in terminal run the following:
+```
 cd /mnt/c/Users/yourcompname/Documents/nyc-citibike-data/trips/
 time (for filename in /mnt/c/Users/0000/Documents/nyc-citibike-data/trips/trips_x*.csv.gz; do
             gunzip -c $filename | \
@@ -142,12 +151,15 @@ time (for filename in /mnt/c/Users/0000/Documents/nyc-citibike-data/trips/trips_
                 clickhouse-client \
                     --query="INSERT INTO bike_trips FORMAT CSV"
         done)
+```
 Data should load rather quickly, the whole process took me about an hour. At the moment the script kicks and error at the very end, some dirty data that needs to be cleaned but I'll get to that another time. Either way, log back into clickhouse client and run a few quick codes:
 
+```
 SELECT COUNT(1) FROM bike_trips;
+```
 
-
+```
 SELECT user_type, count(*) FROM bike_trips GROUP BY user_type;
-
+```
 
 And that's it, quick simple and incredibly powerful, lightning fast results perfect for analytics. Enjoy!
