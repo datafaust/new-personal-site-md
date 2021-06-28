@@ -8,13 +8,11 @@ Recently I've been wanting to expand my knowledge of other database types beyond
 
 In 2017 Mark benchmarked 1.1 billion taxi rides using [Todd Schneider's](https://github.com/toddwschneider/nyc-taxi-data) ETL scripts with our public data. It's been some time but I thought I'd give it a shot myself, particularly since I was intrigued by the performance gains over postgres and even spark on a single node machine.  
 
-I didn't want to spin up a cluster on Amazon to pay at the moment, ot to mention all the storage I would need to buy, so I decided to run this on my Dell G7 laptop which has some impresive specs for a cheap laptop:
-
-![](/img/clickhouse_single_node/specs.png)
+I didn't want to spin up a cluster on Amazon to pay at the moment, ot to mention all the storage I would need to buy, so I decided to run this on my Dell G7 laptop which has some impresive [specs](https://gadgets.ndtv.com/dell-g7-15-7588-8571) for a cheap laptop.
 
 Since clickhouse only runs on linux distributions I chose to run it on Ubuntu 18.04 on WSL (Windows Subsystem Linux). The reason I didn't choose virtualbox was because I wanted to leverage the full power on my computer, and later test Windows HouseOps functionality to access the server locally, a nifty setup to convince the higher ups to use this. 
 
-##Getting WSL up and Running
+## Getting WSL up and Running
 
 Installing wsl in windows is simple, with [documentation here](https://docs.microsoft.com/en-us/windows/wsl/install-win10). Simply activate via powershell and then install through the windows store (choice 1 from the 3 choices listed in the documentation).
 
@@ -24,7 +22,7 @@ Once Ubuntu is installed, you'll want to open up ubuntu through cortana and begi
 
 Since I was just testing out the system and wsl is behind windows firewall I didn't setup any firewalls or security. 
 
-##PostgreSQL
+## PostgreSQL
 
 I followed Mark's blog on coding the data through [postgres](https://tech.marksblogg.com/billion-nyc-taxi-rides-redshift.html) in order to produce the gz files we will load into clickhouse. You can follow the instructions there but here is a short summary of what to do. You'll want to install postgres client and server. In ubuntu, make a directory for the taxi data and clone Todd's repo (note I chose to place my files in windows in order to play around with accessing files across platforms; this means you will need to access the windows files directories):
 
@@ -130,7 +128,7 @@ COPY (
 
 Once you finish downloading the files you are read to load them into clickhouse. The beauty of these files is that you can use them again and again to explore some of the other databases that Mark benchmarks or otherwise explore options you may want to try.
 
-##Setting up clickhouse in wsl
+## Setting up clickhouse in wsl
 
 This was certainly the trickiest part of this porcess. Clickhouse [documentation](https://clickhouse.yandex/docs/en/getting_started/) asks for the following code segments:
 
@@ -234,7 +232,7 @@ and you should receive the following message:
 
 You should be all set now to load the trips.
 
-##Loading the data into clickhouse
+## Loading the data into clickhouse
 
 Loading the data into clickhouse requires editing some of the fields in the trip data. Mark writes:
 
