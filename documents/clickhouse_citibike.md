@@ -1,5 +1,5 @@
-## Loading 50 Million Citibike Trips into Clickhouse on WSL
-# All on a Dell G7
+# Loading 50 Million Citibike Trips into Clickhouse on WSL
+## All on a Dell G7
 
 
 ### The Objective
@@ -8,10 +8,13 @@ A little while ago I had covered how to load tlc trip records into clickhouse un
 ### Get the Data
 When it comes to large data sets, citibike data is probably the next big thing after taxis so I figured I'd load that into clickhouse. I went ahead and cloned Todd Schneider's repo; as a transportation guru he has both citibike and taxi repos holding ETL processes in postgresql. You'll want to run the following to get the program running:
 
+```
 git clone https://github.com/toddwschneider/nyc-citibike-data.git
 cd nyc-citibike-data
 ./download_raw_data.sh
 ./initialize_database.sh && ./import_trips.sh
+```
+
 This shouldn't take too long, took about an hour for me to download everything and another hour for it to process. Once the data is in postgres you will want to extract .gz files, which are highly compressed and will be loaded into clickhouse. Under Todd's schema you'll see he creates a view with combine trip and geographical information:
 
 CREATE VIEW trips_and_stations AS (

@@ -2,7 +2,7 @@
 ## All on a Dell G7:rocket
 
 
-## Why ClickHouse?
+### Why ClickHouse?
 
 Recently I've been wanting to expand my knowledge of other database types beyond SQL variants and map reduce methods with spark. As a data sceintist at the Taxi & Limousine Commission I follow some of the work that is done by the public using our data and have followed [Mark Litwintschik's blog](https://tech.marksblogg.com/) blog for some time. At work we currently lean on SQL Server and PostgreSQL along with Python and R for most of our analyses but I've been curious about incentivizing change (albeit a resistant IT department as many of you probably have).
 
@@ -12,7 +12,7 @@ I didn't want to spin up a cluster on Amazon to pay at the moment, ot to mention
 
 Since clickhouse only runs on linux distributions I chose to run it on Ubuntu 18.04 on WSL (Windows Subsystem Linux). The reason I didn't choose virtualbox was because I wanted to leverage the full power on my computer, and later test Windows HouseOps functionality to access the server locally, a nifty setup to convince the higher ups to use this. 
 
-## Getting WSL up and Running
+### Getting WSL up and Running
 
 Installing wsl in windows is simple, with [documentation here](https://docs.microsoft.com/en-us/windows/wsl/install-win10). Simply activate via powershell and then install through the windows store (choice 1 from the 3 choices listed in the documentation).
 
@@ -22,7 +22,7 @@ Once Ubuntu is installed, you'll want to open up ubuntu through cortana and begi
 
 Since I was just testing out the system and wsl is behind windows firewall I didn't setup any firewalls or security. 
 
-## PostgreSQL
+### PostgreSQL
 
 I followed Mark's blog on coding the data through [postgres](https://tech.marksblogg.com/billion-nyc-taxi-rides-redshift.html) in order to produce the gz files we will load into clickhouse. You can follow the instructions there but here is a short summary of what to do. You'll want to install postgres client and server. In ubuntu, make a directory for the taxi data and clone Todd's repo (note I chose to place my files in windows in order to play around with accessing files across platforms; this means you will need to access the windows files directories):
 
@@ -128,7 +128,7 @@ COPY (
 
 Once you finish downloading the files you are read to load them into clickhouse. The beauty of these files is that you can use them again and again to explore some of the other databases that Mark benchmarks or otherwise explore options you may want to try.
 
-## Setting up clickhouse in wsl
+### Setting up clickhouse in wsl
 
 This was certainly the trickiest part of this porcess. Clickhouse [documentation](https://clickhouse.yandex/docs/en/getting_started/) asks for the following code segments:
 
@@ -232,7 +232,7 @@ and you should receive the following message:
 
 You should be all set now to load the trips.
 
-## Loading the data into clickhouse
+### Loading the data into clickhouse
 
 Loading the data into clickhouse requires editing some of the fields in the trip data. Mark writes:
 
@@ -290,7 +290,7 @@ cab_type
 
 You should see these queries run in a few seconds depending on how much data you loaded.
 
-## Conclusions and Next Steps
+### Conclusions and Next Steps
 Ultimately this is a very powerful software, particularly for low-resource departments with big data usage. This setup is certainly not the most optimal, but for quick access to large data for the average person, clickhouse seems to be a very powerful tool with great potential. A better setup would leverage pure linux distributions, but this can be a great option for organizations which for security reasons may not be able to run linux outside of a windows environment.In the next step I will try and run Tabix, which is a third party gui meant to allow for access of clickhouse data as well as test R and Python access to clickhouse via wsl. Stay tuned!
 
 
