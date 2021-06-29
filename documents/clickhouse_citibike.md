@@ -157,11 +157,11 @@ Data should load rather quickly, the whole process took me about an hour. At the
 ```
 SELECT COUNT(1) FROM bike_trips;
 ```
-![alt text](../images/ch_citibike1.png "Title")
+![alt text](../images/clickhouse_citibike/ch_citibike1.png "Title")
 
 ```
 SELECT user_type, count(*) FROM bike_trips GROUP BY user_type;
 ```
-![alt text](../images/ch_citibike2.png "Title")
+![alt text](../images/clickhouse_citibike/ch_citibike2.png "Title")
 
 And that's it, quick simple and incredibly powerful, lightning fast results perfect for analytics. Enjoy!
