@@ -97,7 +97,7 @@ And what about Scala? Well I don't know much about the language yet but I did wa
 
 I went ahead and made my first scala list:
 
-![alt text](../images/starting_spark_aws/ScalaList.png "Title")
+![alt text](../images/starting_spark_aws/scalaList.png "Title")
 
 I repeat: make sure you terminate your cluster!
 
