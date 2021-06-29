@@ -23,7 +23,7 @@ First you'll want to navigate to [free tier](https://aws.amazon.com/free/) optio
 
 Next you'll want to choose your instance (make sure it says free, I chose 16.04 Ubuntu): 
 
-![alt text](../images/setup_shiny_server/choose_insatnce.PNG "Title")
+![alt text](../images/setup_shiny_server/choose_instance.PNG "Title")
 
 You'll be prompted to set up a key pair, if you've used AWS before you can go ahead and choose the key pair you already made or else you'll have to make your own. Once you move through the rest of the defaults you can launch your instance: 
 
