@@ -19,19 +19,19 @@ Another thing on the old to-do list was using AWS which I haven't used much, alw
 
 First you'll want to navigate to [free tier](https://aws.amazon.com/free/) options and choose the 750 hours of EC2 per month: 
 
-![alt text](../images/setup_shiny_server/pick_free.png "Title")
+![alt text](../images/setup_shiny_server/pick_free.PNG "Title")
 
 Next you'll want to choose your instance (make sure it says free, I chose 16.04 Ubuntu): 
 
-![alt text](../images/setup_shiny_server/choose_insatnce.png "Title")
+![alt text](../images/setup_shiny_server/choose_insatnce.PNG "Title")
 
 You'll be prompted to set up a key pair, if you've used AWS before you can go ahead and choose the key pair you already made or else you'll have to make your own. Once you move through the rest of the defaults you can launch your instance: 
 
-![alt text](../images/setup_shiny_server/launch.png "Title")
+![alt text](../images/setup_shiny_server/launch.PNG "Title")
 
 And you wait until you see it running: 
 
-![alt text](../images/setup_shiny_server/running.png "Title")
+![alt text](../images/setup_shiny_server/running.PNG "Title")
 
 ### Connect to the your Instance
 Connecting to your instance can be a headache if you haven't done it before. If you are just starting off then you will have to create a new one; as is often the case with Microsoft windows in programming and data, things are more difficult than MacOS or Linux. First download [putty](https://www.putty.org/), then you’ll want to create a key pair and convert that key pair with [puttygen](https://aws.amazon.com/premiumsupport/knowledge-center/convert-pem-file-into-ppk/). Now you can feed this converted pair into your puttygen app to connect. Note that when you finally get that terminal open, your login is ubuntu with no password.
@@ -109,7 +109,7 @@ Before we access rstudio server we have to make sure that our EC2 security setti
 
 This will open up a window where you can edit the port connections:
 
-![alt text](../images/setup_shiny_server/edit_port.png "Title")
+![alt text](../images/setup_shiny_server/edit_port.PNG "Title")
 
 Here we are allowing a connection from anywhere to hit the relevant ports. You will add rules for port 8787, 3838 and 80 because we will use all these to access our server.
 
@@ -136,11 +136,11 @@ sudo gdebi shiny-server-1.5.9.923-amd64.deb
 ```
 Shiny will let you know it's running:
 
-![alt text](../images/setup_shiny_server/shiny_running.png "Title")
+![alt text](../images/setup_shiny_server/shiny_running.PNG "Title")
 
 Once this runs you will be able to hit your EC2 address again as with rstudio server but instead of 8787 as your port you will point the address to 3838 and you will get:
 
-![alt text](../images/setup_shiny_server/shiny_page.png "Title")
+![alt text](../images/setup_shiny_server/shiny_page.PNG "Title")
 
 Add write and read priveleges
 ```
